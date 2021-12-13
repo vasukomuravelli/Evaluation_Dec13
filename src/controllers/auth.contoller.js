@@ -12,7 +12,7 @@ const register = async(req,res)=>{
     try{
         let user = await User.findOne({Email : req.body.Email}).lean().exec();
         if(!user){
-            res.status(500).send({"Message" : "Please use different Email","Status" : "Failed"});
+            return res.status(500).send({"Message" : "Please use different Email","Status" : "Failed"});
         }
         
         user = await User.create({
@@ -36,13 +36,13 @@ const login = async(req,res)=>{
         let user = await User.findOne({"Email" : req.body.Email});
 
         if(!user){
-            res.status(500).send({"Message" : "Please check your Email or Password","Status" : "Failed"});
+            return res.status(500).send({"Message" : "Please check your Email or Password","Status" : "Failed"});
         }
 
         const match = await user.checkPassword(req.body.Password);
 
         if(!match){
-            res.status(500).send({"Message" : "Please check your Email or Password","Status" : "Failed"});
+           return res.status(500).send({"Message" : "Please check your Email or Password","Status" : "Failed"});
         }
 
         const token = newToken(user);

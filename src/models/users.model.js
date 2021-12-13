@@ -22,9 +22,12 @@ userSchema.pre("save",function(next){
 });
 
 userSchema.methods.checkPassword = function(password){
-    bcrypt.compare(this.password, password, function(err, res) {
-        if(err) return err;
-        return res;
+    return new Promise((resolve,reject)=>{
+        bcrypt.compare(this.password, password, function(err, same){
+            if(err) return reject(err);
+            
+            return resolve(same);
+        });
     });
 }
 
