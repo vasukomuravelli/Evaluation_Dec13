@@ -8,7 +8,7 @@ const upload = require("../middleware/fileuploads");
 
 const authenticate = require("../middleware/authenticate");
 
-router.post("/",upload.single(Poster),authenticate,async(req,res)=>{
+router.post("/",upload.single("Poster"),authenticate,async(req,res)=>{
 
     try{
         const movie = await Movie.create({
