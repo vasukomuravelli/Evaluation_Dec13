@@ -14,22 +14,15 @@ router.post("/",async(req,res)=>{
     }
 })
 
-router.get("/:seats",async(req,res)=>{
+router.get("/:showid",async(req,res)=>{
     try{
-        const seats = await Seat.find({Show : {Total_Seats : {$gte : +(req.params.seats)}}}).populate(Show).lean().exec();
+        const seats = await Seat.find({Show:{_id : req.params.showid}}).populate("Show").lean().exec();
         res.status(200).send(seats);
     }catch(e){
         res.status(500).send({"Message" : e.message,"Status" : "Failed"});
     }
 });
 
-router.get("/:location",async(req,res)=>{
-    try{
-        const shows = await Show.find({Screen : {Location : req.params.location}}).populate(Movie).populate(Screen).lean().exec();
-        res.status(200).send(shows);
-    }catch(e){
-        res.status(500).send({"Message" : e.message,"Status" : "Failed"});
-    }
-});
+
 
 module.exports = router;

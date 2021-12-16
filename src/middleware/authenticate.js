@@ -2,6 +2,7 @@ require("dotenv").config();
 const jwt = require("jsonwebtoken");
 
 const verifyToken = (token)=>{
+    console.log("decoded");
     return new Promise((resolve,reject)=>{
         jwt.verify(token, process.env.token, function(err, decoded) {
             if(err) return reject(err);
@@ -11,14 +12,13 @@ const verifyToken = (token)=>{
 }
 
 module.exports = async(req,res,next)=>{
-    const bearerToken = req?.headers?.authorizarion;
+    const bearerToken = req?.headers?.authorization;
+    console.log(bearerToken);
     if( !bearerToken || ! bearerToken.startsWith("Bearer "))
-    {
         return res.status(500).json({
             Message : "Please enter a valid Token",
             Status : "Failed",
         });        
-    }
     let user;
     const token = bearerToken.split(' ')[1];
     try{

@@ -5,13 +5,13 @@ const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
 let newToken = (a)=>{
-    jwt.sign({user : a},process.env.token);
+    return jwt.sign({user : a},process.env.token);
 }
 
 const register = async(req,res)=>{
     try{
         let user = await User.findOne({Email : req.body.Email}).lean().exec();
-        if(!user){
+        if(user){
             return res.status(500).send({"Message" : "Please use different Email","Status" : "Failed"});
         }
         

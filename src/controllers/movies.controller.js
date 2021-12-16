@@ -25,7 +25,7 @@ router.post("/",upload.single("Poster"),authenticate,async(req,res)=>{
     }
 });
 
-router.post("/:Actors",async(req,res)=>{
+router.get("/:Actors",async(req,res)=>{
     try{
         const movie = await Movie.find({Actors : [req.params.Actors]}).lean().exec();
 
